@@ -1,0 +1,620 @@
+{
+  "Resources": {
+    "ContainerWorkshopVPCF903BF2F": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.5.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/Resource"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1SubnetF2C4D757": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.5.0.0/18",
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/Subnet"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1RouteTable4689B9F8": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/RouteTable"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1RouteTableAssociationE5AEE155": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet1RouteTable4689B9F8"
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet1SubnetF2C4D757"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/RouteTableAssociation"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1DefaultRoute5D9C550F": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet1RouteTable4689B9F8"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "ContainerWorkshopVPCIGW0626BE5F"
+        }
+      },
+      "DependsOn": [
+        "ContainerWorkshopVPCVPCGWBA584BD8"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/DefaultRoute"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1EIP49094A26": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/EIP"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet1NATGateway3852159D": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "ContainerWorkshopVPCPublicSubnet1EIP49094A26",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet1SubnetF2C4D757"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet1/NATGateway"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2Subnet49966387": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.5.64.0/18",
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/Subnet"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2RouteTable1422B9BA": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/RouteTable"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2RouteTableAssociation6DB7D25A": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet2RouteTable1422B9BA"
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet2Subnet49966387"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/RouteTableAssociation"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2DefaultRouteC53E3E8E": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet2RouteTable1422B9BA"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "ContainerWorkshopVPCIGW0626BE5F"
+        }
+      },
+      "DependsOn": [
+        "ContainerWorkshopVPCVPCGWBA584BD8"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2EIPFB271E29": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/EIP"
+      }
+    },
+    "ContainerWorkshopVPCPublicSubnet2NATGateway8FA5F971": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "ContainerWorkshopVPCPublicSubnet2EIPFB271E29",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet2Subnet49966387"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PublicSubnet2/NATGateway"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet1SubnetA5C954B5": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.5.128.0/18",
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1/Subnet"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet1RouteTableFBD03E6D": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1/RouteTable"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet1RouteTableAssociationB8DCF3BE": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet1RouteTableFBD03E6D"
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet1SubnetA5C954B5"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1/RouteTableAssociation"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet1DefaultRouteF34CD7A6": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet1RouteTableFBD03E6D"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet1NATGateway3852159D"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet1/DefaultRoute"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet2Subnet24B2BAFE": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.5.192.0/18",
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2/Subnet"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet2RouteTableA0CA5DD2": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2/RouteTable"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet2RouteTableAssociation23008664": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet2RouteTableA0CA5DD2"
+        },
+        "SubnetId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet2Subnet24B2BAFE"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2/RouteTableAssociation"
+      }
+    },
+    "ContainerWorkshopVPCPrivateSubnet2DefaultRouteF18F8D04": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "ContainerWorkshopVPCPrivateSubnet2RouteTableA0CA5DD2"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "ContainerWorkshopVPCPublicSubnet2NATGateway8FA5F971"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/PrivateSubnet2/DefaultRoute"
+      }
+    },
+    "ContainerWorkshopVPCIGW0626BE5F": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "container-workshop-stack/ContainerWorkshopVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/IGW"
+      }
+    },
+    "ContainerWorkshopVPCVPCGWBA584BD8": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "ContainerWorkshopVPCF903BF2F"
+        },
+        "InternetGatewayId": {
+          "Ref": "ContainerWorkshopVPCIGW0626BE5F"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/ContainerWorkshopVPC/VPCGW"
+      }
+    },
+    "apps9C782503": {
+      "Type": "AWS::AppMesh::Mesh",
+      "Properties": {
+        "MeshName": "apps",
+        "Spec": {
+          "EgressFilter": {
+            "Type": "ALLOW_ALL"
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/apps/Resource"
+      }
+    },
+    "main7AD10839": {
+      "Type": "AWS::AppMesh::VirtualNode",
+      "Properties": {
+        "MeshName": {
+          "Fn::GetAtt": [
+            "apps9C782503",
+            "MeshName"
+          ]
+        },
+        "Spec": {
+          "Backends": [
+            {
+              "VirtualService": {
+                "VirtualServiceName": {
+                  "Fn::GetAtt": [
+                    "scrumgroupsservice2A68B094",
+                    "VirtualServiceName"
+                  ]
+                }
+              }
+            },
+            {
+              "VirtualService": {
+                "VirtualServiceName": "holidays.apps.local"
+              }
+            },
+            {
+              "VirtualService": {
+                "VirtualServiceName": "resources.apps.local"
+              }
+            }
+          ],
+          "Listeners": [
+            {
+              "PortMapping": {
+                "Port": 80,
+                "Protocol": "http"
+              }
+            }
+          ],
+          "Logging": {
+            "AccessLog": {
+              "File": {
+                "Path": "/dev/stdout"
+              }
+            }
+          },
+          "ServiceDiscovery": {
+            "DNS": {
+              "Hostname": "main.apps.local"
+            }
+          }
+        },
+        "VirtualNodeName": "main"
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/main/Resource"
+      }
+    },
+    "scrumgroups5F000DCC": {
+      "Type": "AWS::AppMesh::VirtualNode",
+      "Properties": {
+        "MeshName": {
+          "Fn::GetAtt": [
+            "apps9C782503",
+            "MeshName"
+          ]
+        },
+        "Spec": {
+          "Listeners": [
+            {
+              "PortMapping": {
+                "Port": 80,
+                "Protocol": "http"
+              }
+            }
+          ],
+          "Logging": {
+            "AccessLog": {
+              "File": {
+                "Path": "/dev/stdout"
+              }
+            }
+          },
+          "ServiceDiscovery": {
+            "DNS": {
+              "Hostname": "scrumgroups.apps.local"
+            }
+          }
+        },
+        "VirtualNodeName": "scrumgroups"
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/scrumgroups/Resource"
+      }
+    },
+    "mainservice1E785CA3": {
+      "Type": "AWS::AppMesh::VirtualService",
+      "Properties": {
+        "MeshName": {
+          "Fn::GetAtt": [
+            "apps9C782503",
+            "MeshName"
+          ]
+        },
+        "Spec": {
+          "Provider": {
+            "VirtualNode": {
+              "VirtualNodeName": {
+                "Fn::GetAtt": [
+                  "main7AD10839",
+                  "VirtualNodeName"
+                ]
+              }
+            }
+          }
+        },
+        "VirtualServiceName": "main.apps.local"
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/mainservice/Resource"
+      }
+    },
+    "scrumgroupsservice2A68B094": {
+      "Type": "AWS::AppMesh::VirtualService",
+      "Properties": {
+        "MeshName": {
+          "Fn::GetAtt": [
+            "apps9C782503",
+            "MeshName"
+          ]
+        },
+        "Spec": {
+          "Provider": {
+            "VirtualNode": {
+              "VirtualNodeName": {
+                "Fn::GetAtt": [
+                  "scrumgroups5F000DCC",
+                  "VirtualNodeName"
+                ]
+              }
+            }
+          }
+        },
+        "VirtualServiceName": "scrumgroups.apps.local"
+      },
+      "Metadata": {
+        "aws:cdk:path": "container-workshop-stack/scrumgroupsservice/Resource"
+      }
+    }
+  }
+}

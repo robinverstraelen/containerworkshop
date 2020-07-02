@@ -1,0 +1,25 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "appmesh:StreamAggregatedResources",
+            "Resource": [
+                "arn:aws:appmesh:eu-west-1:322734229598:mesh/apps/virtualNode/resources_apps"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+                "xray:GetSamplingStatisticSummaries"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}

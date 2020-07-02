@@ -1,0 +1,11 @@
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualService
+metadata:
+  name: resources
+  namespace: apps
+spec:
+  awsName: resources.apps.local
+  provider:
+    virtualNode:
+      virtualNodeRef:
+        name: resources
